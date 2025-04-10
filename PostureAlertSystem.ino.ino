@@ -1,40 +1,40 @@
 #include <IRremote.h>
 
 // Pin Definitions
-const int irSensorPin = 2;         // IR sensor pin
-const int ultrasonicTrigPin = 3;   // Ultrasonic sensor trigger pin
-const int ultrasonicEchoPin = 4;   // Ultrasonic sensor echo pin
-const int buzzerPin = 5;           // Buzzer pin
+const int irSensorPin = 2;        
+const int ultrasonicTrigPin = 3;  
+const int ultrasonicEchoPin = 4;  
+const int buzzerPin = 5;          
 
-long duration;                    // Duration of the pulse from ultrasonic sensor
-int distance;                     // Distance measured by ultrasonic sensor (in cm)
+long duration;                    
+int distance;                     
 
 void setup() {
   // Initialize pins
-  pinMode(irSensorPin, INPUT);    // Set the IR sensor pin as input
-  pinMode(ultrasonicTrigPin, OUTPUT);  // Set the ultrasonic trig pin as output
-  pinMode(ultrasonicEchoPin, INPUT);  // Set the ultrasonic echo pin as input
-  pinMode(buzzerPin, OUTPUT);     // Set the buzzer pin as output
+  pinMode(irSensorPin, INPUT);    
+  pinMode(ultrasonicTrigPin, OUTPUT);  
+  pinMode(ultrasonicEchoPin, INPUT);  
+  pinMode(buzzerPin, OUTPUT);     
   
   // Start serial communication for debugging (optional)
-  Serial.begin(9600);             // Initialize serial communication at 9600 baud rate
+  Serial.begin(9600);             
 }
 
 void loop() {
   // Check if the IR sensor detects a person
-  int personDetected = digitalRead(irSensorPin);  // Read the value from the IR sensor
+  int personDetected = digitalRead(irSensorPin);  
   
-  if (personDetected == HIGH) {  // If a person is detected
+  if (personDetected == HIGH) {  
     // Send a pulse to the ultrasonic sensor to measure distance
-    digitalWrite(ultrasonicTrigPin, LOW);  // Make sure the trigger pin is low for a brief moment
+    digitalWrite(ultrasonicTrigPin, LOW);  
     delayMicroseconds(2);
-    digitalWrite(ultrasonicTrigPin, HIGH); // Send a 10us HIGH pulse to trigger the sensor
+    digitalWrite(ultrasonicTrigPin, HIGH); 
     delayMicroseconds(10);
-    digitalWrite(ultrasonicTrigPin, LOW);  // Set the trigger pin back to LOW
+    digitalWrite(ultrasonicTrigPin, LOW);  
     
     // Measure the pulse duration that reflects the distance
-    duration = pulseIn(ultrasonicEchoPin, HIGH);  // Read the duration of the pulse on the echo pin
-    distance = duration * 0.0344 / 2;  // Convert duration to distance (in cm)
+    duration = pulseIn(ultrasonicEchoPin, HIGH); 
+    distance = duration * 0.0344 / 2;  
 
     // Output the measured distance to the serial monitor (for debugging)
     Serial.print("Distance: ");
@@ -52,5 +52,5 @@ void loop() {
     digitalWrite(buzzerPin, LOW);
   }
 
-  delay(500);  // Wait for half a second before checking again
+  delay(500);  
 }
